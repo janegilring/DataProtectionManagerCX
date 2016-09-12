@@ -32,7 +32,8 @@ If you want to install the module without leveraging PowerShellGet, you can eith
 # Usage
 
 The module contains the following functions:
-- **Get-DPMAgent** - Returns information about a DPM agent, including version information and attached DPM servers. 
+- **Get-DPMAgent** - Returns information about a DPM agent, including version information and attached DPM servers.
+- **Get-DPMAgentOwner** - Returns information about which DPM servers a DPM agent is attached to and what data sources is protected.
 - **Get-DPMRecoveryPointStatus** - Not implemented yet. Returns information about recovery points older than a specified value, for example 2 days.
 - **Get-DPMServerConfiguration** - Not implemented yet. Returns information about the DPM server configuration, including properties relevant for best practices such as page file size and SQL Server memory configuration.
 - **Get-DPMVersion** - Helper function used by other commands which needs to translate a build number to a friendly name, such as returning 'Update Rollup 11 for System Center 2012 R2 Data Protection Manager' as the friendly name for build number 4.2.1552.0. Specify -ListVersion to return all build numbers for System Center DPM 2012 R2, System Center DPM 2016 and Microsoft Azure Backup Server. 
