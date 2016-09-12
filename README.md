@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/a1co1l9w72p93dl7?svg=true)](https://ci.appveyor.com/project/janegilring/dataprotectionmanagercx)
+
 # Introduction
 
 The Data Protection Manager Community Extensions PowerShell module contains commands for working with System Center Data Protection Manager and Microsoft Azure Backup Server.
