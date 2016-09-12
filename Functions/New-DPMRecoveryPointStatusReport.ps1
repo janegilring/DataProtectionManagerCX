@@ -1,0 +1,6 @@
+function New-DPMRecoveryPointStatusReport
+{
+
+# Placeholder
+
+}

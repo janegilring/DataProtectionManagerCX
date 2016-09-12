@@ -1,0 +1,5 @@
+function Get-DPMServerConfiguration {
+
+# Placeholder
+
+}
