@@ -1,5 +1,0 @@
-function Get-DPMRecoveryPointStatus {
-
-# Placeholder
-
-}

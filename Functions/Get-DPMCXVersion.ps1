@@ -1,4 +1,4 @@
-﻿function Get-DPMVersion 
+﻿function Get-DPMCXVersion 
 {
     [CmdletBinding()]
     param (

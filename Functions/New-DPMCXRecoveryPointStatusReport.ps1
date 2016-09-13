@@ -1,0 +1,6 @@
+function New-DPMCXRecoveryPointStatusReport
+{
+
+# Placeholder
+
+}

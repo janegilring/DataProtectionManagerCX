@@ -66,7 +66,7 @@ FormatsToProcess = @()
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = @('Get-DPMAgent','Get-DPMAgentOwner','Get-DPMRecoveryPointStatus','Get-DPMServerConfiguration','Get-DPMVersion','New-DPMRecoveryPointStatusReport','New-DPMServerConfigurationReport','Test-DPMComputer')
+FunctionsToExport = @('Get-DPMCXAgent','Get-DPMCXAgentOwner','Get-DPMCXRecoveryPointStatus','Get-DPMCXServerConfiguration','Get-DPMCXVersion','New-DPMCXRecoveryPointStatusReport','New-DPMCXServerConfigurationReport','Test-DPMCXComputer')
 
 # Cmdlets to export from this module
 CmdletsToExport = @()

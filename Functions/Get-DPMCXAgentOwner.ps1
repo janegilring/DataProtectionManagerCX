@@ -1,5 +1,5 @@
 #requires -Version 3.0
-function Get-DPMAgentOwner
+function Get-DPMCXAgentOwner
 {
   [CmdletBinding()]
   param (
