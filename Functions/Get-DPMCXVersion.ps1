@@ -11,7 +11,7 @@
 
     BEGIN {        
 
-            $functionpath = Split-Path -Path ${function:Get-DPMVersion}.File
+            $functionpath = Split-Path -Path ${function:Get-DPMCXVersion}.File
             $modulepath = Split-Path -Path $functionpath
             $mappingtablemodulepath = Join-Path -Path $modulepath -ChildPath 'DPMVersionMappingTable.json'
 
