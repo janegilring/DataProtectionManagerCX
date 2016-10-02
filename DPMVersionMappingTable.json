@@ -173,5 +173,10 @@
                       "Name" : "4.0.1908.0",
                       "FriendlyName": "System Center 2012 Data Protection Manager RTM",
                       "KB-article": "n/a"
-                  }                                                                                                                                                   
+                  },
+                     {
+                      "Name" : "3.0.7696.0",
+                      "FriendlyName": "System Center 2010 Data Protection Manager RTM",
+                      "KB-article": "n/a"
+                  }                                                                                                                                             
 ]
