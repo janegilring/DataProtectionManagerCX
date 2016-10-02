@@ -36,14 +36,20 @@ foreach ($Computer in $ComputerName) {
     Write-Verbose -Message "Failed to connect to $Computer via PowerShell remoting..."
 
     $output = New-Object -TypeName pscustomobject -Property @{
-      ComputerName = $session.ComputerName
+      ComputerName = $Computer
       Connection   = 'Failed'
-      ConnectionError = $null
+      ConnectionError = $_.Exception
       IsInstalled  = $null
       IsDPMServer    = $null
       FriendlyVersionName = $null
       Version      = $null
     }
+
+      if ($session) 
+          {
+            Remove-Variable -Name session
+          }
+
   }
 
   if ($session) 
