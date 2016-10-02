@@ -4,17 +4,26 @@ function Get-DPMCXAgent
   [CmdletBinding()]
   param (
     [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+    [Alias('__Server','CN')]
     [ValidateNotNullOrEmpty()]
     [string[]] $ComputerName = 'localhost'
   )
 
+
+Process {
+
+foreach ($Computer in $ComputerName) {
+
   try 
   {
-    $session = New-PSSession -ComputerName $ComputerName -ErrorAction Stop
+    $session = New-PSSession -ComputerName $Computer -ErrorAction Stop
+
+    Write-Verbose -Message "Connected to $Computer via PowerShell remoting, gathering DPM information..."
 
     $output  = New-Object -TypeName pscustomobject -Property @{
       ComputerName = $session.ComputerName
       Connection   = 'Success'
+      ConnectionError = $null
       IsInstalled  = $null
       Version      = $null
       FriendlyVersionName = $null
@@ -24,20 +33,34 @@ function Get-DPMCXAgent
 
   catch 
   {
+
+    Write-Verbose -Message "Failed to connect to $Computer via PowerShell remoting..."
+
     $output = New-Object -TypeName pscustomobject -Property @{
-      ComputerName = $env:ComputerName
-      Connection   = 'Success'
+      ComputerName = $Computer
+      Connection   = 'Failed'
+      ConnectionError = $_.Exception
       IsInstalled  = $null
       Version      = $null
       FriendlyVersionName = $null
       DPMServer    = $null
     }
+
+      if ($session) 
+          {
+            Remove-Variable -Name session
+          }
+
   }
 
   if ($session) 
   {
     $DPMAgentIsInstalled = Invoke-Command -Session $session -ScriptBlock {
+
+      $VerbosePreference = $using:VerbosePreference
+
       Test-Path -Path 'HKLM:\SOFTWARE\Microsoft\Microsoft Data Protection Manager'
+
     }
 
   $output.IsInstalled = $DPMAgentIsInstalled
@@ -77,6 +100,10 @@ function Get-DPMCXAgent
     Remove-PSSession -Session $session
   }
 
-  $output | Select-Object -Property ComputerName, Connection, IsInstalled, Version, FriendlyVersionName, DPMServer
+  $output | Select-Object -Property ComputerName, Connection, ConnectionError, IsInstalled, Version, FriendlyVersionName, DPMServer
+ 
+  }
+
+ }
 
 }
