@@ -3,13 +3,21 @@ function Test-DPMCXComputer {
   [CmdletBinding()]
   param (
     [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+    [Alias('__Server','CN')]
     [ValidateNotNullOrEmpty()]
     [string[]] $ComputerName = 'localhost'
   )
 
+
+Process {
+
+foreach ($Computer in $ComputerName) {
+
   try 
   {
-    $session = New-PSSession -ComputerName $ComputerName -ErrorAction Stop
+    $session = New-PSSession -ComputerName $Computer -ErrorAction Stop
+
+    Write-Verbose -Message "Connected to $Computer via PowerShell remoting, gathering DPM information..."
 
     $output  = New-Object -TypeName pscustomobject -Property @{
       ComputerName = $session.ComputerName
@@ -24,6 +32,9 @@ function Test-DPMCXComputer {
 
   catch 
   {
+
+    Write-Verbose -Message "Failed to connect to $Computer via PowerShell remoting..."
+
     $output = New-Object -TypeName pscustomobject -Property @{
       ComputerName = $session.ComputerName
       Connection   = 'Failed'
@@ -38,19 +49,28 @@ function Test-DPMCXComputer {
   if ($session) 
   {
     $DPMAgentIsInstalled = Invoke-Command -Session $session -ScriptBlock {
+
+      $VerbosePreference = $using:VerbosePreference
+
       Test-Path -Path 'HKLM:\SOFTWARE\Microsoft\Microsoft Data Protection Manager'
     }
 
+    $output.IsInstalled = $DPMAgentIsInstalled
+
+
     if ($DPMAgentIsInstalled) 
     {
-      $output.IsInstalled = $DPMAgentIsInstalled
-
+      
       
       $DPMVersionInfo     = Invoke-Command -Session $session -ScriptBlock {
 
         try 
         {
+          
           $Path = (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Microsoft Data Protection Manager\Setup' -ErrorAction Stop).InstallPath
+
+          Write-Verbose -Message "DPM is installed on $($env:ComputerName)"
+
         }
 
         catch 
@@ -75,7 +95,7 @@ function Test-DPMCXComputer {
       
       if (Test-Path -Path 'HKLM:\SOFTWARE\Microsoft\Microsoft Data Protection Manager\Setup') {
 
-        if (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Microsoft Data Protection Manager\Setup' -Name DatabasePath -ErrorAction Ignore) {
+        if (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Microsoft Data Protection Manager\Setup' -Name DatabasePath -ErrorAction SilentlyContinue) {
           
             $true
 
@@ -100,9 +120,12 @@ function Test-DPMCXComputer {
       
 
     Remove-PSSession -Session $session
+    }
+
+    $output | Select-Object -Property ComputerName, Connection, IsInstalled, IsDPMServer, Version, FriendlyVersionName, ConnectionError
+
   }
 
-  $output | Select-Object -Property ComputerName, Connection, IsInstalled, IsDPMServer, Version, FriendlyVersionName, ConnectionError
-
+ }
 
 }
