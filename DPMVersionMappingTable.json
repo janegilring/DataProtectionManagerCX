@@ -158,5 +158,20 @@
                       "Name" : "4.1.3313.0",
                       "FriendlyName": "System Center 2012 SP1 Data Protection Manager RTM",
                       "KB-article": "n/a"
-                  }                                                                                                                                                  
+                  },
+                     {
+                      "Name" : "4.0.1920.0",
+                      "FriendlyName": "Update Rollup 3 for System Center 2012 Data Protection Manager",
+                      "KB-article": "http://support.microsoft.com/kb/2756127"
+                  },
+                     {
+                      "Name" : "4.0.1915.0",
+                      "FriendlyName": "Update Rollup 2 for System Center 2012 Data Protection Manager",
+                      "KB-article": "http://support.microsoft.com/kb/2706783"
+                  },
+                     {
+                      "Name" : "4.0.1908.0",
+                      "FriendlyName": "System Center 2012 Data Protection Manager RTM",
+                      "KB-article": "n/a"
+                  }                                                                                                                                                   
 ]
