@@ -273,7 +273,7 @@ if (($DPMConfigurationData).Version) {
 
     if ($DPMFriendlyVersion.DPMVersionFriendlyName -ne 'Unknown DPM build number') {
 
-        $DPMConfigurationData.Version = $DPMFriendlyVersion.DPMVersionFriendlyName
+        $DPMConfigurationData.Version = $DPMFriendlyVersion.ShortFriendlyName
 
     }
 
