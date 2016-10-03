@@ -74,7 +74,7 @@ foreach ($Computer in $ComputerName) {
 
       $VerbosePreference = $using:VerbosePreference
 
-      Write-Verbose -Message "Connected to $Computer via PowerShell remoting as user $($env:username), gathering DPM information..."
+      Write-Verbose -Message "Connected to $using:Computer via PowerShell remoting as user $($env:username), gathering DPM information..."
 
       Test-Path -Path 'HKLM:\SOFTWARE\Microsoft\Microsoft Data Protection Manager'
 
