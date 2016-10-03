@@ -3,6 +3,8 @@ function Get-DPMCXAgentOwner
 {
   [CmdletBinding()]
   param (
+    [ValidateNotNullOrEmpty()]
+    [PSCredential] $Credential,
     [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
     [Alias('__Server','CN')]
     [ValidateNotNullOrEmpty()]
@@ -13,35 +15,50 @@ Process {
 
 foreach ($Computer in $ComputerName) {
 
-  try 
-  {
-    $session = New-PSSession -ComputerName $Computer -ErrorAction Stop
+      $PSSessionParameters = @{
 
-    Write-Verbose -Message "Connected to $Computer via PowerShell remoting, gathering DPM information..."
+         ComputerName = $computer
+         ErrorAction = 'Stop'
 
-  }
+      }
 
-  catch 
-  {
+      if ($PSBoundParameters.ContainsKey('Credential')) {
 
-    Write-Verbose -Message "Failed to connect to $Computer via PowerShell remoting..."
+         $PSSessionParameters.Add('Credential',$Credential)
 
-    Write-Verbose $_.Exception
+      }
 
-    # Todo: Output object here?
+      try 
+      {
 
-      if ($session) 
-          {
-            Remove-Variable -Name session
-          }
+        $session = New-PSSession @PSSessionParameters
 
-  }
+       }
+
+
+      catch 
+      {
+
+        Write-Verbose -Message "Failed to connect to $Computer via PowerShell remoting..."
+
+        Write-Verbose $_.Exception
+
+        # Todo: Output object here?
+
+          if ($session) 
+              {
+                Remove-Variable -Name session
+              }
+
+      }
 
   if ($session) 
   {
     $DPMAgentIsInstalled = Invoke-Command -Session $session -ScriptBlock {
 
       $VerbosePreference = $using:VerbosePreference
+
+      Write-Verbose -Message "Connected to $Computer via PowerShell remoting as user $($env:username), gathering DPM information..."
 
       Test-Path -Path 'HKLM:\SOFTWARE\Microsoft\Microsoft Data Protection Manager'
 
