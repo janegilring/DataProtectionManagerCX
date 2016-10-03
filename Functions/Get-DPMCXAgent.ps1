@@ -3,6 +3,8 @@ function Get-DPMCXAgent
 {
   [CmdletBinding()]
   param (
+    [ValidateNotNullOrEmpty()]
+    [PSCredential] $Credential,
     [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
     [Alias('__Server','CN')]
     [ValidateNotNullOrEmpty()]
@@ -14,11 +16,22 @@ Process {
 
 foreach ($Computer in $ComputerName) {
 
+      $PSSessionParameters = @{
+
+         ComputerName = $computer
+         ErrorAction = 'Stop'
+
+      }
+
+      if ($PSBoundParameters.ContainsKey('Credential')) {
+
+         $PSSessionParameters.Add('Credential',$Credential)
+
+      }
+
   try 
   {
-    $session = New-PSSession -ComputerName $Computer -ErrorAction Stop
-
-    Write-Verbose -Message "Connected to $Computer via PowerShell remoting, gathering DPM information..."
+    $session = New-PSSession @PSSessionParameters
 
     $output  = New-Object -TypeName pscustomobject -Property @{
       ComputerName = $session.ComputerName
@@ -58,6 +71,8 @@ foreach ($Computer in $ComputerName) {
     $DPMAgentIsInstalled = Invoke-Command -Session $session -ScriptBlock {
 
       $VerbosePreference = $using:VerbosePreference
+
+      Write-Verbose -Message "Connected to $Computer via PowerShell remoting as user $($env:username), gathering DPM information..."
 
       Test-Path -Path 'HKLM:\SOFTWARE\Microsoft\Microsoft Data Protection Manager'
 
