@@ -10,7 +10,7 @@ function New-DPMCXServerConfigurationReport
     [string] $ReportPath,
     [string] $MailEncoding = 'Unicode',
     [string] $MailFrom,
-    [string] $MailTo,
+    [string[]] $MailTo,
     [string] $MailSubject = 'DPM Configuration Status Report',
     [string] $SMTPServer
   )
@@ -40,7 +40,8 @@ $document = Document 'Server Configuration Status Report' {
 
         Section -Style Heading2 'Server Configuration Status Report' {
             
-            Paragraph -Style Heading3 "Report generated on: $ReportGeneratedTimeStamp"
+        Paragraph -Style Heading3 "Report generated at: $ReportGeneratedTimeStamp"
+        Paragraph -Style Heading3 "Report generated on computer: $($env:computername)"
                                   
            $DPMServerConfigurationStatus | Select-Object @{
                   n = 'DPM Server'
