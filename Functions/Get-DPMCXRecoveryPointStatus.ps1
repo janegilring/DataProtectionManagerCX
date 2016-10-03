@@ -48,11 +48,13 @@ function Get-DPMCXRecoveryPointStatus
       {
         $output += New-Object -TypeName pscustomobject -Property @{
           'DPMServer'         = $computer
+          'Connection'   = 'Failed'
           'DataSource'        = $null
           'ProtectedComputer' = $null
           'ProtectionGroup'   = $null
           'LatestRecoveryPoint' = $null
-          'Status'            = 'Failed to connect to DPM Server'
+          'Status'            = $null
+          'Errors'            = "Connection error: $($_.Exception.Message)"
         }
       }
 
@@ -166,7 +168,14 @@ function Get-DPMCXRecoveryPointStatus
                   e = {
                     $env:computername
                   }
-                }, @{
+                }, 
+                @{
+                  n = 'Connection'
+                  e = {
+                    'Success'
+                  }
+                },
+                @{
                   n = 'ProtectedComputer'
                   e = {
                     $_.ProductionServerName
@@ -186,7 +195,8 @@ function Get-DPMCXRecoveryPointStatus
                   e = {
                     "Recovery point older than $using:OlderThan"
                   }
-                }
+                },
+                Errors
               }
               else 
               {
@@ -199,7 +209,14 @@ function Get-DPMCXRecoveryPointStatus
                   e = {
                     $env:computername
                   }
-                }, @{
+                },
+                @{
+                  n = 'Connection'
+                  e = {
+                    'Success'
+                  }
+                },
+                 @{
                   n = 'ProtectedComputer'
                   e = {
                     $_.ProductionServerName
@@ -219,7 +236,8 @@ function Get-DPMCXRecoveryPointStatus
                   e = {
 
                   }
-                }
+                },
+                Errors
               }
 
               Write-Verbose -Message 'Finished processing Data Sources, disconnecting from DPM Server'
@@ -235,18 +253,20 @@ function Get-DPMCXRecoveryPointStatus
           
               break
             }
-          } -ErrorAction Stop -Verbose | Select-Object -Property DPMServer, ProtectedComputer, ProtectionGroup, DataSource, LatestRecoveryPoint, Status
+          } -ErrorAction Stop -Verbose | Select-Object -Property DPMServer, Connection, ProtectedComputer, ProtectionGroup, DataSource, LatestRecoveryPoint, Status, Errors
         }
 
         catch 
         {
           $DPMDatasources += New-Object -TypeName pscustomobject -Property @{
             'DPMServer'         = $computer
+            'Connection'   = 'Success'
             'DataSource'        = $null
             'ProtectedComputer' = $null
             'ProtectionGroup'   = $null
             'LatestRecoveryPoint' = $null
-            'Status'            = "An error occured gathering data: $($_.Exception.Message)"
+            'Status'            = $null
+            'Errors' = "An error occured gathering data: $($_.Exception.Message)"
           }
         }
 
@@ -266,11 +286,13 @@ function Get-DPMCXRecoveryPointStatus
         {
           $output += New-Object -TypeName pscustomobject -Property @{
             DPMServer           = $computer
+            Connection          = 'Success'
             ProtectedComputer   = $null
             ProtectionGroup     = $null
             DataSource          = $null
             LatestRecoveryPoint = $null
             Status              = "No latest recovery point older than $OlderThan found"
+            'Errors' = $null
           }
         }
       }
