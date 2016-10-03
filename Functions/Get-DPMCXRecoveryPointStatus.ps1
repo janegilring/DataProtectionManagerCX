@@ -2,7 +2,9 @@
 function Get-DPMCXRecoveryPointStatus 
 {
   [CmdletBinding()]
-  param (
+  param (    
+    [ValidateNotNullOrEmpty()]
+    [PSCredential] $Credential,
     [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()]
     [string[]] $DpmServerName = 'localhost',
@@ -24,9 +26,22 @@ function Get-DPMCXRecoveryPointStatus
 
       Remove-Variable -Name session -ErrorAction Ignore
 
+      $PSSessionParameters = @{
+
+         ComputerName = $computer
+         ErrorAction = 'Stop'
+
+      }
+
+      if ($PSBoundParameters.ContainsKey('Credential')) {
+
+         $PSSessionParameters.Add('Credential',$Credential)
+
+      }
+
       try 
       {
-        $session = New-PSSession -ComputerName $computer -ErrorAction Stop
+        $session = New-PSSession @PSSessionParameters
       }
 
       catch 
@@ -47,14 +62,16 @@ function Get-DPMCXRecoveryPointStatus
       {
         try 
         {
-          Write-Verbose -Message 'Connected via PowerShell remoting, gathering Data Sources'
-
+          
           $DPMDatasources = Invoke-Command -Session $session -ScriptBlock {
+
+            Write-Verbose -Message "Connected via PowerShell remoting as user $($env:username), gathering Data Sources"
+
             try 
             {
               . ([ScriptBlock]::Create($using:InitializeDPMCXDataSourcePropertyDefinition))
 
-              Import-Module -Name DataProtectionManager -ErrorAction Stop
+              Import-Module -Name DataProtectionManager -ErrorAction Stop -Verbose:$false
 
               $VerbosePreference = $Using:VerbosePreference
 
