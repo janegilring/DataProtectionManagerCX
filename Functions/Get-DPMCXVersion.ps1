@@ -35,6 +35,7 @@
     PROCESS {
 
                   $FriendlyName = ($mappingtable | Where-Object {$_.Name -eq $Version}).FriendlyName
+                  $ShortFriendlyName = ($mappingtable | Where-Object {$_.Name -eq $Version}).ShortFriendlyName
                   
                   if (-not ($FriendlyName)) {
 
@@ -46,6 +47,7 @@
                 $output =  [pscustomobject]@{
                 DPMVersion = $Version
                 DPMVersionFriendlyName = $FriendlyName
+                ShortFriendlyName = $ShortFriendlyName
                 }
 
                 return $output
