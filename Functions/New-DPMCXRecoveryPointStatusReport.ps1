@@ -12,7 +12,7 @@ function New-DPMCXRecoveryPointStatusReport
     [string] $ReportPath,
     [string] $MailEncoding = 'Unicode',
     [string] $MailFrom,
-    [string] $MailTo,
+    [string[]] $MailTo,
     [string] $MailSubject = 'DPM Recovery Point Status Report',
     [string] $SMTPServer
   )
@@ -51,22 +51,22 @@ $document = Document 'DPM Recovery Point Status Report' {
 
         Section -Style Heading2 'DPM Recovery Point Status Report' {
             
-            Paragraph -Style Heading3 "Report generated on: $ReportGeneratedTimeStamp"
+            Paragraph -Style Heading3 "Report generated at: $ReportGeneratedTimeStamp"
+            Paragraph -Style Heading3 "Report generated on computer: $($env:computername)"
 
             if ($OlderThan) {
             
             Paragraph -Style Heading3 "Threshold: Recovery Points older than $OlderThan"
 
-            #$DPMRecoveryPointStatus | Where-Object { $_.Status.ToString() -ne ''} | Set-Style -Style 'AttentionRequired'
             $DPMRecoveryPointStatus |  Where-Object { $_.LatestRecoveryPoint -ne $null} | Where-Object { $_.LatestRecoveryPoint -lt $OlderThan} | Set-Style -Style 'AttentionRequired'
 
-            $DPMRecoveryPointStatus | Table -Columns DPMServer,ProtectionGroup,ProtectedComputer,DataSource,LatestRecoveryPoint,Status -ColumnWidths 15,15,15,15,15,25 -Headers DPMServer,ProtectionGroup,ProtectedComputer,DataSource,LatestRecoveryPoint,Status
+            $DPMRecoveryPointStatus | Table -Columns DPMServer,Status,ProtectionGroup,ProtectedComputer,DataSource,LatestRecoveryPoint,Connection,Errors
             
             } else {
             
             Paragraph -Style Heading3 "Recovery Point status"
 
-            $DPMRecoveryPointStatus | Table -Columns DPMServer,ProtectionGroup,ProtectedComputer,DataSource,LatestRecoveryPoint,Status -ColumnWidths 15,15,15,15,15,25 -Headers DPMServer,ProtectionGroup,ProtectedComputer,DataSource,LatestRecoveryPoint,Status
+            $DPMRecoveryPointStatus | Table -Columns DPMServer,Status,ProtectionGroup,ProtectedComputer,DataSource,LatestRecoveryPoint,Connection,Errors
 
 
             }
