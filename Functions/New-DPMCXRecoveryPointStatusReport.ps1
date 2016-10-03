@@ -90,9 +90,21 @@ $body = Get-Content -Path $HTMLFile.FullName | Out-String
   Body = $body 
   BodyAsHTML=$true
   Encoding = $MailEncoding
+  ErrorAction = 'Stop'
  }
 
-# To do: Error handling
-Send-MailMessage @mailParams
+try {
+
+    Send-MailMessage @mailParams
+
+    Write-Output "DPM report sent successfully to $MailTo using SMTP server $SMTPServer"
+
+}
+
+catch {
+
+    Write-Output "An error occured while trying to send the DPM report to $MailTo using SMTP server $SMTPServer : $($_.Exception.Message)"
+
+}
 
 }
