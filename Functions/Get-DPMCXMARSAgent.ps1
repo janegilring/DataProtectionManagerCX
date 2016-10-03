@@ -1,5 +1,5 @@
 #requires -Version 3.0
-function Get-DPMCXAgent
+function Get-DPMCXMARSAgent
 {
   [CmdletBinding()]
   param (
@@ -40,8 +40,7 @@ foreach ($Computer in $ComputerName) {
       IsInstalled  = $null
       Version      = $null
       FriendlyVersionName = $null
-      AzureRecoveryServicesAgentIsInstalled = $null
-      DPMServer    = $null
+      DPMIsInstalled = $null
     }
   }
 
@@ -57,8 +56,7 @@ foreach ($Computer in $ComputerName) {
       IsInstalled  = $null
       Version      = $null
       FriendlyVersionName = $null
-      AzureRecoveryServicesAgentIsInstalled = $null
-      DPMServer    = $null
+      DPMIsInstalled = $null
     }
 
       if ($session) 
@@ -74,7 +72,7 @@ foreach ($Computer in $ComputerName) {
 
       $VerbosePreference = $using:VerbosePreference
 
-      Write-Verbose -Message "Connected to $Computer via PowerShell remoting as user $($env:username), gathering DPM information..."
+      Write-Verbose -Message "Connected to $Computer via PowerShell remoting as user $($env:username), gathering MARS information..."
 
       Test-Path -Path 'HKLM:\SOFTWARE\Microsoft\Microsoft Data Protection Manager'
 
@@ -86,46 +84,43 @@ foreach ($Computer in $ComputerName) {
 
     }
 
-  $output.IsInstalled = $DPMAgentIsInstalled
-  $output.AzureRecoveryServicesAgentIsInstalled = $MARSAgentIsInstalled 
-      
-    if ($DPMAgentIsInstalled) 
+  $output.IsInstalled = $MARSAgentIsInstalled
+  $output.DPMIsInstalled = $DPMAgentIsInstalled 
+  
+    if ($MARSAgentIsInstalled) 
     {  
 
-      $DPMVersionInfo     = Invoke-Command -Session $session -ScriptBlock {
+      $MARSVersionInfo     = Invoke-Command -Session $session -ScriptBlock {
 
         try 
         {
-          $Path = (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Microsoft Data Protection Manager\Setup' -ErrorAction Stop).InstallPath
-          Write-Verbose -Message "DPM is installed on $($env:ComputerName)"
+          $Path = (Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows Azure Backup\Setup' -ErrorAction Stop).InstallPath
+          Write-Verbose -Message "Microsoft Azure Recovery Services Agent is installed on $($env:ComputerName)"
         }
 
         catch 
         {
-          Write-Verbose -Message "DPM not installed on $($env:ComputerName)"
+          Write-Verbose -Message "Microsoft Azure Recovery Services Agent not installed on $($env:ComputerName)"
           break
         }
 
-        $DPMRAPath = Join-Path -Path $Path -ChildPath bin\DPMRA.exe
+        $CBEnginePath = Join-Path -Path $Path -ChildPath bin\cbengine.exe
 
-        (Get-Item -Path $DPMRAPath).VersionInfo.FileVersion
+        (Get-Item -Path $CBEnginePath).VersionInfo.FileVersion
       }
 
-      if ($DPMVersionInfo) 
+      if ($MARSVersionInfo) 
       {
-        $output.Version = $DPMVersionInfo
-        $output.FriendlyVersionName = (Get-DPMCXVersion -Version $DPMVersionInfo).DPMVersionFriendlyName
+        $output.Version = $MARSVersionInfo
+        $output.FriendlyVersionName = (Get-DPMCXMARSVersion -Version $MARSVersionInfo).MARSVersionFriendlyName
       }
-
-      #Todo: Get DPM Server information from ActiveOwner File Paths
-      # $output.DPMServer = 
 
     }
 
     Remove-PSSession -Session $session
   }
 
-  $output | Select-Object -Property ComputerName, Connection, ConnectionError, IsInstalled, Version, FriendlyVersionName, DPMServer, AzureRecoveryServicesAgentIsInstalled
+  $output | Select-Object -Property ComputerName, Connection, ConnectionError, IsInstalled, Version, FriendlyVersionName, DPMIsInstalled
  
   }
 

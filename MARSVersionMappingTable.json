@@ -1,0 +1,32 @@
+[
+   {
+                      "Name" : "2.0.9040.0",
+                      "FriendlyName": "Azure Backup Update for Microsoft Azure Recovery Services Agent: August 2016",
+                      "ShortFriendlyName": "MARS Agent: 1608",
+                      "KB-article": "https://support.microsoft.com/en-us/kb/3177441"
+                  },
+   {
+                      "Name" : "2.0.9037.0",
+                      "FriendlyName": "Azure Backup update: May 2016",
+                      "ShortFriendlyName": "MARS Agent: 1605",
+                      "KB-article": "https://support.microsoft.com/en-us/kb/3162327"
+                  },
+   {
+                      "Name" : "2.0.9032.0",
+                      "FriendlyName": "Azure Backup reliability update: March 2016",
+                      "ShortFriendlyName": "MARS Agent: 1603",
+                      "KB-article": "https://support.microsoft.com/en-us/kb/3146941"
+                  },
+   {
+                      "Name" : "2.0.9022.0",
+                      "FriendlyName": "Azure Backup optimization update: December 2015",
+                      "ShortFriendlyName": "MARS Agent: 1512",
+                      "KB-article": "https://support.microsoft.com/en-us/kb/3109750"
+                  },
+   {
+                      "Name" : "2.0.8719.0",
+                      "FriendlyName": "Mandatory update for Azure Backup fixes a server authentication error for ongoing backups: August 2015",
+                      "ShortFriendlyName": "MARS Agent: 1508",
+                      "KB-article": "https://support.microsoft.com/en-us/kb/3080243"
+                  }                                                                                                                                                         
+]
