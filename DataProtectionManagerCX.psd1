@@ -12,7 +12,7 @@
 RootModule = 'DataProtectionManagerCX.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.1'
+ModuleVersion = '0.9'
 
 # ID used to uniquely identify this module
 GUID = 'b3eaabcf-bfa1-4393-b1dd-5e81a1e4a5bb'
