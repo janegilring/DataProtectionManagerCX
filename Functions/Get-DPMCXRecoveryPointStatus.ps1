@@ -247,7 +247,6 @@ function Get-DPMCXRecoveryPointStatus
       {
         if ($session) 
         {
-          $OlderThan = Get-Date
           $output += New-Object -TypeName pscustomobject -Property @{
             DPMServer           = $computer
             ProtectedComputer   = $null
