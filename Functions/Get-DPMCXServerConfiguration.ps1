@@ -46,7 +46,7 @@ function Get-DPMCXServerConfiguration {
         $output += New-Object -TypeName pscustomobject -Property @{
           'DPMServer' = $computer
           'Connection'   = 'Failed'
-          'Status' = "Connection error: $($_.Exception.Message)"
+          'Errors' = "Connection error: $($_.Exception.Message)"
           'Active alerts' = $null
           'Shadow Copy snapshots' = $null
           'Volumes' = $null
