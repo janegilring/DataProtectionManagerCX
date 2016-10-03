@@ -3,11 +3,14 @@ function New-DPMCXRecoveryPointStatusReport
 
  [CmdletBinding()]
   param (
+    [ValidateNotNullOrEmpty()]
+    [PSCredential] $Credential,
     [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
     [ValidateNotNullOrEmpty()]
     [string[]] $DpmServerName = 'localhost',
     [datetime] $OlderThan,
     [string] $ReportPath,
+    [string] $MailEncoding = 'Unicode',
     [string] $MailFrom,
     [string] $MailTo,
     [string] $MailSubject = 'DPM Recovery Point Status Report',
@@ -20,7 +23,13 @@ $parameters = @{
 DpmServerName = $DpmServerName
 }
 
-if ($OlderThan) {
+if ($PSBoundParameters.ContainsKey('Credential')) {
+
+$parameters.Add('Credential',$Credential)
+
+}
+
+if ($PSBoundParameters.ContainsKey('OlderThan')) {
 
 $parameters.Add('OlderThan',$OlderThan)
 
@@ -80,6 +89,7 @@ $body = Get-Content -Path $HTMLFile.FullName | Out-String
   SMTPServer= $SMTPServer
   Body = $body 
   BodyAsHTML=$true
+  Encoding = $MailEncoding
  }
 
 # To do: Error handling
