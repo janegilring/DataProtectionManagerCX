@@ -62,7 +62,7 @@ $MARSAgentAvailableVersions | Select-Object @{
                   e = {
                     $_.FriendlyName
                   }
-                } | Table
+                }, Description | Table
 
         }
     }
