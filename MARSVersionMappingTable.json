@@ -1,11 +1,18 @@
 [
    {
+                      "Name" : "2.0.9052.0",
+                      "FriendlyName": "Microsoft Azure Recovery Services Agent: October 2016",
+                      "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+                      "ShortFriendlyName": "MARS Agent: 1610",
+                      "KB-article": "https://support.microsoft.com/en-us/kb/3196148"
+                  },
+   {
                       "Name" : "2.0.9040.0",
                       "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2016",
                       "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
                       "ShortFriendlyName": "MARS Agent: 1608",
                       "KB-article": "https://support.microsoft.com/en-us/kb/3177441"
-                  },
+                  },                  
    {
                       "Name" : "2.0.9037.0",
                       "FriendlyName": "Microsoft Azure Recovery Services Agent: May 2016",
