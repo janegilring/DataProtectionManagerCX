@@ -90,8 +90,56 @@ function Get-DPMCXRecoveryPointStatus
                 $computer = $_.Computer
                 $ProductionServerName = $_.ProductionServerName
                 $ProtectionGroup = $_.ProtectionGroup
+                
 
                 Write-Verbose -Message "Processing Data Source $ProductionServerName"
+
+                #region Schedules
+
+                if ($ProtectionGroup) {
+
+                $Schedules = $ProtectionGroup.GetSchedules()
+
+                if ($Schedules["FullReplicationForApplication"]) {
+
+                $ScheduleInfo = $Schedules["FullReplicationForApplication"]
+                Write-Verbose -Message "Protection group $($ProtectionGroup.Name) is using Application schedule"
+
+                } elseif ($Schedules["ShadowCopy"]) {
+
+                $ScheduleInfo = $Schedules["ShadowCopy"]
+                Write-Verbose -Message "Protection group $($ProtectionGroup.Name) is using Shadow Copy schedule"
+
+                }
+
+                Write-Verbose -Message "ScheduleDescription: $($ScheduleInfo.ScheduleDescription)"
+
+                if ($ScheduleInfo.ScheduleDescription -notlike "*Everyday*") {
+
+                Write-Verbose -Message "Protection group $($ProtectionGroup.Name) is not backed up every day, calculating latest previous scheduled recovery point time"
+
+                $PreviousWeekDay = $ScheduleInfo.WeekDays[-1]
+                $TimesOfDay = $ScheduleInfo.TimesOfDay[-1]
+
+                $DayCounter = 1
+
+                do
+                {
+                $DayCounter--
+                $PreviousRecoveryPoint = (Get-Date -Hour $TimesOfDay.Hour -Minute $TimesOfDay.Minute).AddDays($DayCounter)
+                    
+                }
+                until ($PreviousRecoveryPoint.DayOfWeek -like "$PreviousWeekDay*") 
+                
+                Write-Verbose -Message "Previous scheduled recovery point time: $PreviousRecoveryPoint"
+
+                $ProtectionGroup | Add-Member -MemberType NoteProperty -Name PreviousRecoveryPoint -Value $PreviousRecoveryPoint -Force
+
+                }
+
+                }
+                
+                #endregion
 
                 $ProtectedObjects = $_.GetProtectedObjects()
 
@@ -159,9 +207,43 @@ function Get-DPMCXRecoveryPointStatus
 
               if ($using:OlderThan) 
               {
+
+                Write-Verbose -Message '-OlderThan specified, filtering data sources...'
+
                 $DPMDatasources |
                 Where-Object -FilterScript {
                   $_.CurrentlyProtected -and ($_.LatestRecoveryPoint -lt $using:OlderThan)
+                } | Foreach-Object -Process {
+
+                  if ($_.ProtectionGroup.PreviousRecoveryPoint) {
+
+                     Write-Verbose -Message "Data source $($_.Name) on protected computer $($_.Computer) has PreviousRecoveryPoint defined, verifying against OlderThan value..."
+                     
+                     $TimeSpan = New-TimeSpan -Start $using:OlderThan
+                     $DesiredMaxAge = $_.ProtectionGroup.PreviousRecoveryPoint.AddDays($TimeSpan.Days)
+
+                     #if ($DesiredMaxAge -lt $_.ProtectionGroup.PreviousRecoveryPoint) {
+                    if ($_.LatestRecoveryPoint -gt $DesiredMaxAge) {
+
+                      Write-Verbose -Message "LatestRecoveryPoint $($_.LatestRecoveryPoint) is greater than OlderThan/DesiredMaxAge value $($DesiredMaxAge), adding data source to output..."
+
+                      $_
+
+                     } else {
+
+                      Write-Verbose -Message "LatestRecoveryPoint $($_.LatestRecoveryPoint) is not greater than OlderThan/DesiredMaxAge value $($DesiredMaxAge), data source compliant and not added to output..."
+
+                     }
+                     
+
+                  } else {
+
+                    Write-Verbose -Message "Data source $($_.Name) on protected computer $($_.Computer) does not have PreviousRecoveryPoint defined"
+                    $_
+
+                  }
+
+
                 } |
                 Select-Object -Property @{
                   n = 'DPMServer'
