@@ -8,7 +8,7 @@ function New-DPMCXServerConfigurationReport
     [ValidateNotNullOrEmpty()]
     [string[]] $DpmServerName = 'localhost',
     [string] $ReportPath,
-    [string] $MailEncoding = 'Unicode',
+    [string] $MailEncoding = 'Default',
     [string] $MailFrom,
     [string[]] $MailTo,
     [string] $MailSubject = 'DPM Configuration Status Report',

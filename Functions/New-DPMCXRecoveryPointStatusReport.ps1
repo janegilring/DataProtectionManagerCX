@@ -10,7 +10,7 @@ function New-DPMCXRecoveryPointStatusReport
     [string[]] $DpmServerName = 'localhost',
     [datetime] $OlderThan,
     [string] $ReportPath,
-    [string] $MailEncoding = 'Unicode',
+    [string] $MailEncoding = 'Default',
     [string] $MailFrom,
     [string[]] $MailTo,
     [string] $MailSubject = 'DPM Recovery Point Status Report',
