@@ -94,12 +94,27 @@ function Get-DPMCXServerConfiguration {
 
                 foreach ($disk in (Get-DPMDisk -DpmServerName $HostName)) {
 
-                $TotalDiskCapacity += $disk.totalcapacity
-                $UnallocatedDiskCapacity += $disk.unallocatedspace
+                    $TotalDiskCapacity += $disk.totalcapacity
+                    $UnallocatedDiskCapacity += $disk.unallocatedspace
 
 
                 }
 
+                if ((Get-Command -Name Get-DPMDisk -ErrorAction SilentlyContinue).Parameters.ContainsKey('Volumes')) {
+
+
+                $ModernDPMStorageDisks = Get-DPMDisk -Volumes
+
+                foreach ($disk in $ModernDPMStorageDisks) {
+
+                    $Volume = Get-Volume -Path $disk.Path
+                    $TotalDiskCapacity += $Volume.Size
+                    $UnallocatedDiskCapacity += $Volume.SizeRemaining
+
+
+                }
+
+                }
 
                 Write-Verbose -Message "Collecting DPM information from DPM SQL Server instance"
                 # Disable due to lots of noice from loading SQL commands (such as warnings related to 'Microsoft.WindowsAzure.Commands.SqlDatabase.Types.ps1xml')
@@ -140,36 +155,8 @@ function Get-DPMCXServerConfiguration {
                 $DPMPS = Get-DPMProductionServer -DPMServerName $HostName | Where-Object {$_.machinename -eq $env:computername}
                 $Version = ($DPMPS.InstalledAgents | Select-Object -ExpandProperty agent | Select-Object -ExpandProperty version).ToString()
 
-                if (Get-PSSnapin -Registered -Name sqlservercmdletsnapin100 -ErrorAction silentlycontinue) {
+                $VSSVolumes = Get-DPMVolume -AlreadyInUseByDPM -DpmServerName $HostName | Where-Object {$_.VolumeType -ne 'Replica'} | Measure-Object -Property VolumeSize -Sum
 
-                Add-PSSnapin -Name sqlservercmdletsnapin100
-
-
-                }
-
-                # Find out where DPMDB is located
-                $DPMDB = $DPMServerConnection.dpmdatabaselogicalpath.substring($DPMServerConnection.DPMDatabaseLogicalPath.LastIndexOf('\') + 1,$DPMServerConnection.DPMDatabaseLogicalPath.Length - $DPMServerConnection.DPMDatabaseLogicalPath.LastIndexOf('\') -1 )
-                $DPMSQLInstance   = $DPMServerConnection.dpmdatabaselogicalpath.substring(0,$DPMServerConnection.DPMDatabaseLogicalPath.LastIndexOf('\'))
-                $GB    = 1 / 1024 / 1024 / 1024
-                $Query = "  declare @total bigint
-                            select distinct volume.GuidName,volume.VolumeSize into #test
-                            from tbl_SPM_Volume Volume 
-                            join tbl_SPM_VolumeSet VolumeSet on VolumeSet.VolumeSetId=Volume.VolumeSetId 
-                            join tbl_PRM_LogicalReplica Replica on Replica.PhysicalReplicaId=VolumeSet.VolumeSetId 
-                            where Replica.Validity not in (0,4)  -- [Allocated = 0,Invalid = 1,Valid = 2,Missing = 3,Destroyed = 4,ProtectionStopped = 5,Inactive = 6]
-                            and volume.usage = 2   -- Replica=1, DiffArea=2
-                            select @total = SUM(volumesize) from #test
-                            insert into #test values ('=Total RP volume size',@total)
-                            select @total = (SUM(volumesize)*.002) from #test
-                            where GuidName like '%=Total%'
-                            insert into #test values ('Additional pagefile size reqd in BYTES',@total)
-                            select @total = (SUM(volumesize)/1024) from #test
-                            where GuidName like '%BYTES%'
-                            insert into #test values ('Additional pagefile size reqd in MB',@total)
-                            select * from #test order by guidname
-                            drop table #test" 
-
-                $RPPageFile          = (invoke-sqlcmd -serverinstance $DPMSQLInstance -query $query -MaxCharLength 10000000 -Database $DPMDB)
                 $CurrentPageFileSize = 0
                 $CurrentPageFiles    = @(Get-WmiObject Win32_pagefileusage)
                 foreach ($PageFile in $CurrentPageFiles)
@@ -178,8 +165,8 @@ function Get-DPMCXServerConfiguration {
                 }
                 $TotalRAM = (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory
 
-                $PageFile = "{0:N0} GB" -f ($CurrentPageFileSize * $GB)
-                $PageFileRecommended = "{0:N0} GB" -f (($TotalRAM * 1.5 + $RPPageFile[-3].VolumeSize *.002) * $GB)
+                $PageFile = "{0:N0} GB" -f ($CurrentPageFileSize/1GB)
+                $PageFileRecommended = "{0:N0} GB" -f (($TotalRAM * 1.5 + $VSSVolumes.Sum *.002)/1GB)
 
                 $VssShadows = vssadmin list shadows | Select-String 'Shadow Copy ID'
 
@@ -193,7 +180,15 @@ function Get-DPMCXServerConfiguration {
 
                 }
 
-                $DPMVolumes = Get-DPMVolume -DpmServerName $HostName -AlreadyInUseByDPM
+                $DPMVolumes = @()
+                $DPMVolumes += Get-DPMVolume -DpmServerName $HostName -AlreadyInUseByDPM
+
+                if ((Get-Command -Name Get-DPMDisk -ErrorAction SilentlyContinue).Parameters.ContainsKey('Volumes')) {
+
+                $DPMVolumes += Get-DPMDisk -Volumes -DpmServerName $HostName
+
+                }
+                
 
                 #endregion
 
