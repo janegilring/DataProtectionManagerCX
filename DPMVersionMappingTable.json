@@ -6,6 +6,18 @@
                       "KB-article": "n/a"
                   }, 
    {
+                      "Name" : "5.0.322.0",
+                      "FriendlyName": "Update Rollup 2 for System Center 2016 Data Protection Manager",
+                      "ShortFriendlyName": "SC DPM 2016 UR2",
+                      "KB-article": "https://support.microsoft.com/en-us/help/3209593"
+                  },
+   {
+                      "Name" : "5.0.247.0",
+                      "FriendlyName": "Update Rollup 1 for System Center 2016 Data Protection Manager",
+                      "ShortFriendlyName": "SC DPM 2016 UR1",
+                      "KB-article": "https://support.microsoft.com/en-us/kb/3190600"
+                  },
+   {
                       "Name" : "5.0.158.0",
                       "FriendlyName": "System Center 2016 Data Protection Manager RTM",
                       "ShortFriendlyName": "SC DPM 2016 RTM",
@@ -151,7 +163,7 @@
                   },
    {
                       "Name" : "4.1.3419.0",
-                      "FriendlyName": "Update Rollup 3.6 for System Center 2012 SP1 Data Protection Manager",
+                      "FriendlyName": "Update Rollup 3.6 for System Center 2012 SP1 Data Protection Manager",
                       "ShortFriendlyName": "SC DPM 2012 SP1 UR 3.6",
                       "KB-article": "http://www.microsoft.com/en-us/download/details.aspx?id=40318"
                   },
