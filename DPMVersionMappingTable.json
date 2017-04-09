@@ -54,6 +54,12 @@
                       "KB-article": "n/a"
                   },    
    {
+                      "Name" : "4.2.1589.0",
+                      "FriendlyName": "Update Rollup 12 for System Center 2012 R2 Data Protection Manager",
+                      "ShortFriendlyName": "SC DPM 2012 R2 UR 12",
+                      "KB-article": "https://support.microsoft.com/en-us/help/3209592"
+                  },   
+   {
                       "Name" : "4.2.1553.0",
                       "FriendlyName": "Update Rollup 11 for System Center 2012 R2 Data Protection Manager",
                       "ShortFriendlyName": "SC DPM 2012 R2 UR 11",
