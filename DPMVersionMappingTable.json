@@ -1,5 +1,11 @@
 [
    {
+                      "Name" : "12.0.332.0",
+                      "FriendlyName": "Microsoft Azure Backup Server V2 RTM",
+                      "ShortFriendlyName": "Azure Backup Server V2 RTM",
+                      "KB-article": ""
+                  }, 
+   {
                       "Name" : "11.0.50.0",
                       "FriendlyName": "Microsoft Azure Backup Server RTM",
                       "ShortFriendlyName": "Azure Backup Server RTM",
@@ -52,7 +58,13 @@
                       "FriendlyName": "Technical Preview for System Center 2016 Data Protection Manager",
                       "ShortFriendlyName": "SC DPM 2016 TP",
                       "KB-article": "n/a"
-                  },    
+                  },
+   {
+                      "Name" : "4.2.1594.0",
+                      "FriendlyName": "Update Rollup 13 for System Center 2012 R2 Data Protection Manager",
+                      "ShortFriendlyName": "SC DPM 2012 R2 UR 13",
+                      "KB-article": "https://support.microsoft.com/en-us/help/4021873/update-rollup-13-for-system-center-2012-r2-data-protection-manager"
+                  },                        
    {
                       "Name" : "4.2.1589.0",
                       "FriendlyName": "Update Rollup 12 for System Center 2012 R2 Data Protection Manager",
