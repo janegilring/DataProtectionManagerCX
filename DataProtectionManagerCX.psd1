@@ -12,7 +12,7 @@
 RootModule = 'DataProtectionManagerCX.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0'
+ModuleVersion = '1.1'
 
 # ID used to uniquely identify this module
 GUID = 'b3eaabcf-bfa1-4393-b1dd-5e81a1e4a5bb'
@@ -105,7 +105,7 @@ PrivateData = @{
 
         # ReleaseNotes of this module
         ReleaseNotes = '
-        0.1 - Initial version, for more information see http://www.powershellmagazine.com/?p=XXXXX
+        0.1 - Initial version, for more information see http://www.powershell.no/security/2017/07/03/introducing-dpm-cx.html
         '
 
         # External dependent modules of this module
