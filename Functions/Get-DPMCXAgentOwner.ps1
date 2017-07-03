@@ -92,7 +92,32 @@ foreach ($Computer in $ComputerName) {
 
            Write-Verbose -Message "Processing ActiveOwner file $thisPath"
 
-          # Todo: Read binary file contents
+          $fileStream   = New-Object -TypeName System.IO.FileStream -ArgumentList ($thisPath, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read)
+          $fileReader   = New-Object -TypeName System.IO.BinaryReader -ArgumentList $fileStream
+
+          $outputString = ''
+          $continue     = $false
+
+          do 
+          {
+            $readBytes     = $fileReader.ReadBytes(2)
+            $unicodeString = [System.Text.Encoding]::Unicode.GetString($readBytes)
+            if ($unicodeString -eq '') 
+            {
+              $continue = $true
+            }
+            else 
+            {
+              $outputString += $unicodeString
+            }
+          }
+          until ($continue)
+            
+          [pscustomobject]@{
+            ActiveOwnerFile              = (Split-Path -Path $thisPath -Leaf)
+            ActiveOwnerFileLastWriteTime = (Get-Item $thisPath).LastWriteTime
+            DPMServerName                = $outputString
+          }
 
         }
 
