@@ -7,6 +7,13 @@
                       "KB-article": "https://support.microsoft.com/en-us/help/4023876/azure-backup-update-for-microsoft-azure-recovery-services-agent-may-20"
                   },
    {
+                      "Name" : "2.0.9071.0",
+                      "FriendlyName": "Microsoft Azure Recovery Services Agent: March 2017 hotfix",
+                      "Description": "Hotfix: The Microsoft Recovery Services Agent cannot connect to the OBEngine service when you add the MARS Agent add-in",
+                      "ShortFriendlyName": "MARS Agent: 1703 hotfix",
+                      "KB-article": "https://support.microsoft.com/en-us/help/4015082/azure-backup-update-for-azure-recovery-services-agent-march-2017"
+                  },
+   {
                       "Name" : "2.0.9070.0",
                       "FriendlyName": "Microsoft Azure Recovery Services Agent: March 2017",
                       "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
