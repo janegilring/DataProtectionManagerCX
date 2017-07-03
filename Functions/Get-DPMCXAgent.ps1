@@ -117,8 +117,7 @@ foreach ($Computer in $ComputerName) {
         $output.FriendlyVersionName = (Get-DPMCXVersion -Version $DPMVersionInfo).DPMVersionFriendlyName
       }
 
-      #Todo: Get DPM Server information from ActiveOwner File Paths
-      # $output.DPMServer = 
+      $output.DPMServer = (((Get-DPMCXAgentOwner -ComputerName $ComputerName).DPMServerName | Sort-Object -Unique ) -join ',' )
 
     }
 
