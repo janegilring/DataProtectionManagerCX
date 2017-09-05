@@ -44,6 +44,7 @@ $document = Document 'DPM Recovery Point Status Report' {
 
                 
                  Style -Name 'AttentionRequired' -Color White -BackgroundColor Red -Bold
+                 Style -Name 'Warning' -Color Black -BackgroundColor Yellow -Bold
 
 
     Section -Style Heading1 'DPM Servers' {
@@ -53,6 +54,8 @@ $document = Document 'DPM Recovery Point Status Report' {
             
             Paragraph -Style Heading3 "Report generated at: $ReportGeneratedTimeStamp"
             Paragraph -Style Heading3 "Report generated on computer: $($env:computername)"
+
+            $DPMRecoveryPointStatus |  Where-Object { $_.Connection -ne 'Success'} | Set-Style -Style 'Warning'
 
             if ($OlderThan) {
             
