@@ -1,5 +1,26 @@
 [
-{
+    {
+                        "Name" : "2.0.9083.0",
+                        "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2017",
+                        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+                        "ShortFriendlyName": "MARS Agent: 1708",
+                        "KB-article": "https://support.microsoft.com/en-us/help/4036510/mandatory-update-for-microsoft-azure-recovery-services-agent"
+                    },
+    {
+                        "Name" : "2.0.9082.0",
+                        "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2017",
+                        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+                        "ShortFriendlyName": "MARS Agent: 1708",
+                        "KB-article": "https://support.microsoft.com/en-us/help/4036510/mandatory-update-for-microsoft-azure-recovery-services-agent"
+                    },    
+    {
+                        "Name" : "2.0.9081.0",
+                        "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2017",
+                        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+                        "ShortFriendlyName": "MARS Agent: 1708",
+                        "KB-article": "https://support.microsoft.com/en-us/help/4036510/mandatory-update-for-microsoft-azure-recovery-services-agent"
+                    },
+    {
                       "Name" : "2.0.9077.0",
                       "FriendlyName": "Microsoft Azure Recovery Services Agent: May 2017",
                       "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
