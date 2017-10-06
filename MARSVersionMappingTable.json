@@ -1,100 +1,107 @@
 [
     {
-                        "Name" : "2.0.9083.0",
-                        "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2017",
-                        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
-                        "ShortFriendlyName": "MARS Agent: 1708",
-                        "KB-article": "https://support.microsoft.com/en-us/help/4036510/mandatory-update-for-microsoft-azure-recovery-services-agent"
-                    },
+        "Name": "2.0.9085.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: September 2017",
+        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+        "ShortFriendlyName": "MARS Agent: 1709",
+        "KB-article": "https://support.microsoft.com/nb-no/help/4041236"
+    },
     {
-                        "Name" : "2.0.9082.0",
-                        "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2017",
-                        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
-                        "ShortFriendlyName": "MARS Agent: 1708",
-                        "KB-article": "https://support.microsoft.com/en-us/help/4036510/mandatory-update-for-microsoft-azure-recovery-services-agent"
-                    },    
+        "Name": "2.0.9083.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2017",
+        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+        "ShortFriendlyName": "MARS Agent: 1708",
+        "KB-article": "https://support.microsoft.com/en-us/help/4036510/mandatory-update-for-microsoft-azure-recovery-services-agent"
+    },
     {
-                        "Name" : "2.0.9081.0",
-                        "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2017",
-                        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
-                        "ShortFriendlyName": "MARS Agent: 1708",
-                        "KB-article": "https://support.microsoft.com/en-us/help/4036510/mandatory-update-for-microsoft-azure-recovery-services-agent"
-                    },
+        "Name": "2.0.9082.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2017",
+        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+        "ShortFriendlyName": "MARS Agent: 1708",
+        "KB-article": "https://support.microsoft.com/en-us/help/4036510/mandatory-update-for-microsoft-azure-recovery-services-agent"
+    },
     {
-                      "Name" : "2.0.9077.0",
-                      "FriendlyName": "Microsoft Azure Recovery Services Agent: May 2017",
-                      "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
-                      "ShortFriendlyName": "MARS Agent: 1705",
-                      "KB-article": "https://support.microsoft.com/en-us/help/4023876/azure-backup-update-for-microsoft-azure-recovery-services-agent-may-20"
-                  },
-   {
-                      "Name" : "2.0.9071.0",
-                      "FriendlyName": "Microsoft Azure Recovery Services Agent: March 2017 hotfix",
-                      "Description": "Hotfix: The Microsoft Recovery Services Agent cannot connect to the OBEngine service when you add the MARS Agent add-in",
-                      "ShortFriendlyName": "MARS Agent: 1703 hotfix",
-                      "KB-article": "https://support.microsoft.com/en-us/help/4015082/azure-backup-update-for-azure-recovery-services-agent-march-2017"
-                  },
-   {
-                      "Name" : "2.0.9070.0",
-                      "FriendlyName": "Microsoft Azure Recovery Services Agent: March 2017",
-                      "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
-                      "ShortFriendlyName": "MARS Agent: 1703",
-                      "KB-article": "https://support.microsoft.com/en-us/help/4015082/azure-backup-update-for-azure-recovery-services-agent-march-2017"
-                  },
-   {
-                      "Name" : "2.0.9062.0",
-                      "FriendlyName": "Microsoft Azure Recovery Services Agent: January 2017",
-                      "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
-                      "ShortFriendlyName": "MARS Agent: 1701",
-                      "KB-article": "https://support.microsoft.com/en-us/help/3216528/azure-backup-update-for-microsoft-azure-recovery-services-agent-januar"
-                  },
-   {
-                      "Name" : "2.0.9052.0",
-                      "FriendlyName": "Microsoft Azure Recovery Services Agent: October 2016",
-                      "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
-                      "ShortFriendlyName": "MARS Agent: 1610",
-                      "KB-article": "https://support.microsoft.com/en-us/kb/3196148"
-                  },
-   {
-                      "Name" : "2.0.9040.0",
-                      "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2016",
-                      "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
-                      "ShortFriendlyName": "MARS Agent: 1608",
-                      "KB-article": "https://support.microsoft.com/en-us/kb/3177441"
-                  },                  
-   {
-                      "Name" : "2.0.9037.0",
-                      "FriendlyName": "Microsoft Azure Recovery Services Agent: May 2016",
-                      "Description": "Azure Backup update",
-                      "ShortFriendlyName": "MARS Agent: 1605",
-                      "KB-article": "https://support.microsoft.com/en-us/kb/3162327"
-                  },
-   {
-                      "Name" : "2.0.9032.0",
-                      "FriendlyName": "Microsoft Azure Recovery Services Agent: March 2016",
-                      "Description": "Azure Backup reliability update",
-                      "ShortFriendlyName": "MARS Agent: 1603",
-                      "KB-article": "https://support.microsoft.com/en-us/kb/3146941"
-                  },
-   {
-                      "Name" : "2.0.9022.0",
-                      "FriendlyName": "Microsoft Azure Recovery Services Agent: December 2015",
-                      "Description": "Azure Backup optimization update",
-                      "ShortFriendlyName": "MARS Agent: 1512",
-                      "KB-article": "https://support.microsoft.com/en-us/kb/3109750"
-                  },
-   {
-                      "Name" : "2.0.8719.0",
-                      "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2015",
-                      "Description": "Mandatory update for Azure Backup fixes a server authentication error for ongoing backups",
-                      "ShortFriendlyName": "MARS Agent: 1508",
-                      "KB-article": "https://support.microsoft.com/en-us/kb/3080243"
-                  },
-   {
-                      "Name" : "2.0.8703.0",
-                      "FriendlyName": "Microsoft Azure Recovery Services Agent: February 2015",
-                      "Description": "Azure Backup supports offline disk shipment and increases the number of backup copies and retention policies in Windows",
-                      "ShortFriendlyName": "MARS Agent: 1502",
-                      "KB-article": "https://support.microsoft.com/en-us/kb/3033794"
-                  }                                                                                                                                                            
+        "Name": "2.0.9081.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2017",
+        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+        "ShortFriendlyName": "MARS Agent: 1708",
+        "KB-article": "https://support.microsoft.com/en-us/help/4036510/mandatory-update-for-microsoft-azure-recovery-services-agent"
+    },
+    {
+        "Name": "2.0.9077.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: May 2017",
+        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+        "ShortFriendlyName": "MARS Agent: 1705",
+        "KB-article": "https://support.microsoft.com/en-us/help/4023876/azure-backup-update-for-microsoft-azure-recovery-services-agent-may-20"
+    },
+    {
+        "Name": "2.0.9071.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: March 2017 hotfix",
+        "Description": "Hotfix: The Microsoft Recovery Services Agent cannot connect to the OBEngine service when you add the MARS Agent add-in",
+        "ShortFriendlyName": "MARS Agent: 1703 hotfix",
+        "KB-article": "https://support.microsoft.com/en-us/help/4015082/azure-backup-update-for-azure-recovery-services-agent-march-2017"
+    },
+    {
+        "Name": "2.0.9070.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: March 2017",
+        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+        "ShortFriendlyName": "MARS Agent: 1703",
+        "KB-article": "https://support.microsoft.com/en-us/help/4015082/azure-backup-update-for-azure-recovery-services-agent-march-2017"
+    },
+    {
+        "Name": "2.0.9062.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: January 2017",
+        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+        "ShortFriendlyName": "MARS Agent: 1701",
+        "KB-article": "https://support.microsoft.com/en-us/help/3216528/azure-backup-update-for-microsoft-azure-recovery-services-agent-januar"
+    },
+    {
+        "Name": "2.0.9052.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: October 2016",
+        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+        "ShortFriendlyName": "MARS Agent: 1610",
+        "KB-article": "https://support.microsoft.com/en-us/kb/3196148"
+    },
+    {
+        "Name": "2.0.9040.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2016",
+        "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
+        "ShortFriendlyName": "MARS Agent: 1608",
+        "KB-article": "https://support.microsoft.com/en-us/kb/3177441"
+    },
+    {
+        "Name": "2.0.9037.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: May 2016",
+        "Description": "Azure Backup update",
+        "ShortFriendlyName": "MARS Agent: 1605",
+        "KB-article": "https://support.microsoft.com/en-us/kb/3162327"
+    },
+    {
+        "Name": "2.0.9032.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: March 2016",
+        "Description": "Azure Backup reliability update",
+        "ShortFriendlyName": "MARS Agent: 1603",
+        "KB-article": "https://support.microsoft.com/en-us/kb/3146941"
+    },
+    {
+        "Name": "2.0.9022.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: December 2015",
+        "Description": "Azure Backup optimization update",
+        "ShortFriendlyName": "MARS Agent: 1512",
+        "KB-article": "https://support.microsoft.com/en-us/kb/3109750"
+    },
+    {
+        "Name": "2.0.8719.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: August 2015",
+        "Description": "Mandatory update for Azure Backup fixes a server authentication error for ongoing backups",
+        "ShortFriendlyName": "MARS Agent: 1508",
+        "KB-article": "https://support.microsoft.com/en-us/kb/3080243"
+    },
+    {
+        "Name": "2.0.8703.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: February 2015",
+        "Description": "Azure Backup supports offline disk shipment and increases the number of backup copies and retention policies in Windows",
+        "ShortFriendlyName": "MARS Agent: 1502",
+        "KB-article": "https://support.microsoft.com/en-us/kb/3033794"
+    }
 ]
