@@ -11,6 +11,12 @@
                       "ShortFriendlyName": "Azure Backup Server RTM",
                       "KB-article": "n/a"
                   }, 
+                  {
+                    "Name" : "5.0.342.0",
+                    "FriendlyName": "Update Rollup 4 for System Center 2016 Data Protection Manager",
+                    "ShortFriendlyName": "SC DPM 2016 UR4",
+                    "KB-article": "https://support.microsoft.com/en-us/help/4043316/update-rollup-4-for-system-center-2016-data-protection-manager"
+                },                  
    {
                       "Name" : "5.0.322.0",
                       "FriendlyName": "Update Rollup 2 for System Center 2016 Data Protection Manager",
