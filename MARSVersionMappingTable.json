@@ -1,5 +1,12 @@
 [
     {
+        "Name": "2.0.9109.0",
+        "FriendlyName": "Microsoft Azure Recovery Services Agent: February 2018",
+        "Description": "Mandatory update for Microsoft Azure Recovery Services Agent",
+        "ShortFriendlyName": "MARS Agent: 1802",
+        "KB-article": "https://support.microsoft.com/en-us/help/4057617/mandatory-update-for-microsoft-azure-recovery-services-agent-february"
+    },    
+    {
         "Name": "2.0.9099.0",
         "FriendlyName": "Microsoft Azure Recovery Services Agent: November 2017",
         "Description": "Azure Backup Update for Microsoft Azure Recovery Services Agent",
