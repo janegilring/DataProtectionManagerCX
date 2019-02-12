@@ -12,7 +12,7 @@
 RootModule = 'DataProtectionManagerCX.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1'
+ModuleVersion = '1.2'
 
 # ID used to uniquely identify this module
 GUID = 'b3eaabcf-bfa1-4393-b1dd-5e81a1e4a5bb'
@@ -24,7 +24,7 @@ Author = 'Jan Egil Ring'
 CompanyName = 'PS Community'
 
 # Copyright statement for this module
-Copyright = '(c) 2017 Jan Egil Ring. All rights reserved.'
+Copyright = '(c) 2019 Jan Egil Ring. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Contains PowerShell commands for working with System Center Data Protection Manager and Microsft Azure Backup Server.'
@@ -66,7 +66,7 @@ FormatsToProcess = @()
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = @('Get-DPMCXAgent','Get-DPMCXAgentOwner','Get-DPMCXMARSAgent','Get-DPMCXMARSVersion','Get-DPMCXRecoveryPointStatus','Get-DPMCXServerConfiguration', 'Get-DPMCXSizingBaseline','Get-DPMCXVersion','New-DPMCXMARSAgentReport','New-DPMCXRecoveryPointStatusReport','New-DPMCXServerConfigurationReport','Test-DPMCXComputer')
+FunctionsToExport = @('Get-DPMCXAgent','Get-DPMCXAgentOwner','Get-DPMCXAlert','Get-DPMCXMARSAgent','Get-DPMCXMARSVersion','Get-DPMCXRecoveryPointStatus','Get-DPMCXServerConfiguration', 'Get-DPMCXSizingBaseline','Get-DPMCXVersion','New-DPMCXMARSAgentReport','New-DPMCXRecoveryPointStatusReport','New-DPMCXServerConfigurationReport','Test-DPMCXComputer')
 
 # Cmdlets to export from this module
 CmdletsToExport = @()
