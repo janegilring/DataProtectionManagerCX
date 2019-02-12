@@ -254,7 +254,7 @@ function Get-DPMCXRecoveryPointStatus
                 @{
                   n = 'Connection'
                   e = {
-                    'Success'
+                    'OK'
                   }
                 },
                 @{
@@ -295,7 +295,7 @@ function Get-DPMCXRecoveryPointStatus
                 @{
                   n = 'Connection'
                   e = {
-                    'Success'
+                    'OK'
                   }
                 },
                  @{
@@ -342,7 +342,7 @@ function Get-DPMCXRecoveryPointStatus
         {
           $DPMDatasources += New-Object -TypeName pscustomobject -Property @{
             'DPMServer'         = $computer
-            'Connection'   = 'Success'
+            'Connection'   = 'OK'
             'DataSource'        = $null
             'ProtectedComputer' = $null
             'ProtectionGroup'   = $null
@@ -368,7 +368,7 @@ function Get-DPMCXRecoveryPointStatus
         {
           $output += New-Object -TypeName pscustomobject -Property @{
             DPMServer           = $computer
-            Connection          = 'Success'
+            Connection          = 'OK'
             ProtectedComputer   = $null
             ProtectionGroup     = $null
             DataSource          = $null
