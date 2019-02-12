@@ -1,113 +1,135 @@
-function New-DPMCXRecoveryPointStatusReport
-{
+function New-DPMCXRecoveryPointStatusReport {
 
- [CmdletBinding()]
-  param (
-    [ValidateNotNullOrEmpty()]
-    [PSCredential] $Credential,
-    [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
-    [ValidateNotNullOrEmpty()]
-    [string[]] $DpmServerName = 'localhost',
-    [datetime] $OlderThan,
-    [string] $ReportPath,
-    [string] $MailEncoding = 'Default',
-    [string] $MailFrom,
-    [string[]] $MailTo,
-    [string] $MailSubject = 'DPM Recovery Point Status Report',
-    [string] $SMTPServer
-  )
+    [CmdletBinding()]
+    param (
+        [ValidateNotNullOrEmpty()]
+        [PSCredential] $Credential,
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string[]] $DpmServerName = 'localhost',
+        [datetime] $OlderThan,
+        [string] $ReportPath,
+        [string] $MailEncoding = 'Default',
+        [string] $MailFrom,
+        [string[]] $MailTo,
+        [string] $MailSubject = 'DPM Recovery Point Status Report',
+        [string] $SMTPServer,
+        [switch] $IncludeAlerts
+    )
 
-$ReportGeneratedTimeStamp = Get-Date
+    $ReportGeneratedTimeStamp = Get-Date
 
-$parameters = @{
-DpmServerName = $DpmServerName
-}
+    $parameters = @{
+        DpmServerName = $DpmServerName
+    }
 
-if ($PSBoundParameters.ContainsKey('Credential')) {
+    $DPMAlertsParameters = @{
+        DpmServerName = $DpmServerName
+    }
 
-$parameters.Add('Credential',$Credential)
+    if ($PSBoundParameters.ContainsKey('Credential')) {
 
-}
+        $parameters.Add('Credential', $Credential)
+        $DPMAlertsParameters.Add('Credential', $Credential)
 
-if ($PSBoundParameters.ContainsKey('OlderThan')) {
+    }
 
-$parameters.Add('OlderThan',$OlderThan)
+    if ($PSBoundParameters.ContainsKey('OlderThan')) {
 
-}
+        $parameters.Add('OlderThan', $OlderThan)
 
-$DPMRecoveryPointStatus = Get-DPMCXRecoveryPointStatus @parameters
+    }
 
-# To do: Error handling and prompt for automatic install using PowerShellGet
-Import-Module PScribo
+    $DPMRecoveryPointStatus = Get-DPMCXRecoveryPointStatus @parameters
 
-$document = Document 'DPM Recovery Point Status Report' {
+    if ($PSBoundParameters.ContainsKey('IncludeAlerts')) {
+
+        $DPMAlerts = Get-DPMCXAlert @DPMAlertsParameters
+    
+    }
+
+    # To do: Error handling and prompt for automatic install using PowerShellGet
+    Import-Module PScribo
+
+    $document = Document 'DPM Status Report' {
 
                 
-                 Style -Name 'AttentionRequired' -Color White -BackgroundColor Red -Bold
-                 Style -Name 'Warning' -Color Black -BackgroundColor Yellow -Bold
+        Style -Name 'AttentionRequired' -Color White -BackgroundColor Red -Bold
+        Style -Name 'Warning' -Color Black -BackgroundColor Yellow -Bold
 
 
-    Section -Style Heading1 'DPM Servers' {
+        Section -Style Heading1 'DPM Status' {
 
-
-        Section -Style Heading2 'DPM Recovery Point Status Report' {
-            
             Paragraph -Style Heading3 "Report generated at: $ReportGeneratedTimeStamp"
             Paragraph -Style Heading3 "Report generated on computer: $($env:computername)"
 
-            $DPMRecoveryPointStatus |  Where-Object { $_.Connection -ne 'Success'} | Set-Style -Style 'Warning'
-
-            if ($OlderThan) {
+            Section -Style Heading2 'Recovery Point Status Report' {
             
-            Paragraph -Style Heading3 "Threshold: Recovery Points older than $OlderThan"
+                $DPMRecoveryPointStatus |  Where-Object { $_.Connection -ne 'Success'} | Set-Style -Style 'Warning'
 
-            $DPMRecoveryPointStatus |  Where-Object { $_.LatestRecoveryPoint -ne $null} | Where-Object { $_.LatestRecoveryPoint -lt $OlderThan} | Set-Style -Style 'AttentionRequired'
-
-            $DPMRecoveryPointStatus | Table -Columns DPMServer,Status,ProtectionGroup,ProtectedComputer,DataSource,LatestRecoveryPoint,Connection,Errors
+                if ($OlderThan) {
             
-            } else {
+                    Paragraph -Style Heading2 "Threshold: Recovery Points older than $OlderThan"
+
+                    $DPMRecoveryPointStatus |  Where-Object { $_.LatestRecoveryPoint -ne $null} | Where-Object { $_.LatestRecoveryPoint -lt $OlderThan} | Set-Style -Style 'AttentionRequired'
+
+                    $DPMRecoveryPointStatus | Table -Columns DPMServer, Status, ProtectionGroup, ProtectedComputer, DataSource, LatestRecoveryPoint, Connection, Errors
             
-            Paragraph -Style Heading3 "Recovery Point status"
+                } else {
+            
+                    Paragraph -Style Heading3 "Recovery Point status"
 
-            $DPMRecoveryPointStatus | Table -Columns DPMServer,Status,ProtectionGroup,ProtectedComputer,DataSource,LatestRecoveryPoint,Connection,Errors
+                    $DPMRecoveryPointStatus | Table -Columns DPMServer, Status, ProtectionGroup, ProtectedComputer, DataSource, LatestRecoveryPoint, Connection, Errors
 
+
+                }
+            
+            
 
             }
-            
-            
+
+            if ($DPMAlerts) {
+
+                Section -Style Heading2 'Active Alerts' {
+
+                    $DPMAlerts | Table
+
+                }
+
+            }
+
 
         }
+
+
     }
 
+    $HTMLFile = $document | Export-Document -Path $env:TEMP -Format Html
+    $body = Get-Content -Path $HTMLFile.FullName | Out-String
 
-}
+    $mailParams = @{
+        To          = $MailTo
+        From        = $MailFrom
+        Subject     = $MailSubject
+        SMTPServer  = $SMTPServer
+        Body        = $body 
+        BodyAsHTML  = $true
+        Encoding    = $MailEncoding
+        ErrorAction = 'Stop'
+    }
 
-$HTMLFile = $document | Export-Document -Path $env:TEMP -Format Html
-$body = Get-Content -Path $HTMLFile.FullName | Out-String
+    try {
 
- $mailParams=@{
-  To= $MailTo
-  From= $MailFrom
-  Subject= $MailSubject
-  SMTPServer= $SMTPServer
-  Body = $body 
-  BodyAsHTML=$true
-  Encoding = $MailEncoding
-  ErrorAction = 'Stop'
- }
+        Send-MailMessage @mailParams
 
-try {
+        Write-Output "DPM report sent successfully to $MailTo using SMTP server $SMTPServer"
 
-    Send-MailMessage @mailParams
+    }
 
-    Write-Output "DPM report sent successfully to $MailTo using SMTP server $SMTPServer"
+    catch {
 
-}
+        Write-Output "An error occured while trying to send the DPM report to $MailTo using SMTP server $SMTPServer : $($_.Exception.Message)"
 
-catch {
-
-    Write-Output "An error occured while trying to send the DPM report to $MailTo using SMTP server $SMTPServer : $($_.Exception.Message)"
-
-}
+    }
 
 }
