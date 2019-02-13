@@ -65,7 +65,7 @@ function New-DPMCXRecoveryPointStatusReport {
 
             Section -Style Heading2 'Recovery Point Status Report' {
             
-                $DPMRecoveryPointStatus |  Where-Object { $_.Connection -ne 'Success'} | Set-Style -Style 'Warning'
+                $DPMRecoveryPointStatus |  Where-Object { $_.Connection -ne 'OK'} | Set-Style -Style 'Warning'
 
                 if ($OlderThan) {
             
