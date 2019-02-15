@@ -71,7 +71,8 @@ function New-DPMCXRecoveryPointStatusReport {
             
                     Paragraph -Style Heading2 "Threshold: Recovery Points older than $OlderThan"
 
-                    $DPMRecoveryPointStatus |  Where-Object { $_.LatestRecoveryPoint -ne $null} | Where-Object { $_.LatestRecoveryPoint -lt $OlderThan} | Set-Style -Style 'AttentionRequired'
+                    $DPMRecoveryPointStatus |  Where-Object {$_.LatestRecoveryPoint -ne $null} | Where-Object {$_.LatestRecoveryPoint -lt $OlderThan} | Set-Style -Style 'AttentionRequired'
+                    $DPMRecoveryPointStatus | Where-Object {$_.Errors} | Set-Style -Style 'AttentionRequired'
 
                     $DPMRecoveryPointStatus | Table -Columns DPMServer, Status, ProtectionGroup, ProtectedComputer, DataSource, LatestRecoveryPoint, Connection, Errors
             
