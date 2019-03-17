@@ -95,7 +95,7 @@ PrivateData = @{
         # Tags = @()
 
         # A URL to the license for this module.
-        LicenseUri = 'https://raw.githubusercontent.com/janegilring/DataProtectionManagerCX/master/LICENSE'
+        LicenseUri = 'https://github.com/janegilring/DataProtectionManagerCX/blob/master/LICENSE'
 
         # A URL to the main website for this project.
         ProjectUri = 'https://github.com/janegilring/DataProtectionManagerCX'
