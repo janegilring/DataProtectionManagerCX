@@ -13,7 +13,7 @@ no contributions should be made directly to this branch.
 
 ### dev
 
-[![Build Status](https://dev.azure.com/janegilring/AzureFileSyncDsc/_apis/build/status/janegilring.AzureFileSyncDsc?branchName=dev)](https://dev.azure.com/janegilring/AzureFileSyncDsc/_build/latest?definitionId=3?branchName=dev)
+[![Build Status](https://dev.azure.com/janegilring/PSVersion/_apis/build/status/janegilring.PSVersion?branchName=dev)](https://dev.azure.com/janegilring/PSVersion/_build/latest?definitionId=3?branchName=dev)
 
 This is the development branch
 to which contributions should be proposed by contributors as pull requests.
