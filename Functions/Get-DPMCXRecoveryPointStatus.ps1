@@ -79,12 +79,12 @@ function Get-DPMCXRecoveryPointStatus
 
               $HostName = [System.Net.Dns]::GetHostByName((HOSTNAME.EXE)).HostName
 
-              $DPMServerConnection = Connect-DPMServer -DPMServerName $HostName -WarningAction SilentlyContinue
+              $DPMServerConnection = Connect-DPMServer -DPMServerName $HostName -WarningAction SilentlyContinue -ErrorAction Stop
 
-              $DPMDatasources = Get-DPMDatasource -DPMServerName $HostName -WarningAction SilentlyContinue
+              $DPMDatasources = Get-DPMDatasource -DPMServerName $HostName -WarningAction SilentlyContinue -ErrorAction Stop
 
               Write-Verbose -Message 'Invoking Initialize-DPMCXDataSourceProperty'
-              Initialize-DPMCXDataSourceProperty -DataSource $DPMDatasources
+              Initialize-DPMCXDataSourceProperty -DataSource $DPMDatasources -ErrorAction Stop
 
               $DPMDatasources = $DPMDatasources | ForEach-Object -Process {
                 $computer = $_.Computer
@@ -324,15 +324,17 @@ function Get-DPMCXRecoveryPointStatus
 
               Write-Verbose -Message 'Finished processing Data Sources, disconnecting from DPM Server'
 
-              Disconnect-DPMServer
+              Disconnect-DPMServer -ErrorAction Stop
             }
 
             catch 
             {
               Write-Verbose -Message "An error occured: $($_.Exception.Message)"
           
-              throw $_.Exception.Message
-          
+              Disconnect-DPMServer
+              
+              throw $($_.Exception.Message)
+
               break
             }
           } -ErrorAction Stop -Verbose | Select-Object -Property DPMServer, Connection, ProtectedComputer, ProtectionGroup, DataSource, LatestRecoveryPoint, Status, Errors
