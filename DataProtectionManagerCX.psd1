@@ -12,7 +12,7 @@
 RootModule = 'DataProtectionManagerCX.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.2'
+ModuleVersion = '1.3.0'
 
 # ID used to uniquely identify this module
 GUID = 'b3eaabcf-bfa1-4393-b1dd-5e81a1e4a5bb'
@@ -95,7 +95,7 @@ PrivateData = @{
         # Tags = @()
 
         # A URL to the license for this module.
-        LicenseUri = 'https://raw.githubusercontent.com/janegilring/DataProtectionManagerCX/master/LICENSE'
+        LicenseUri = 'https://github.com/janegilring/DataProtectionManagerCX/blob/master/LICENSE'
 
         # A URL to the main website for this project.
         ProjectUri = 'https://github.com/janegilring/DataProtectionManagerCX'
@@ -104,15 +104,13 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '
-        0.1 - Initial version, for more information see http://www.powershell.no/security/2017/07/03/introducing-dpm-cx.html
-        '
+        # ReleaseNotes = ''
 
         # External dependent modules of this module
         # ExternalModuleDependencies = ''
 
     } # End of PSData hashtable
-    
+
  } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
