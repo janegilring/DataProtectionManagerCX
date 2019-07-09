@@ -13,7 +13,7 @@ For($i = 0;$i -lt $datasource.count;$i++)
 }
 $datasource | Select-Object LatestRecoveryPoint,Computer > $null
 $begin = Get-Date
-While (((Get-Date).subtract($begin).seconds -lt 10) -and ($Eventcount -lt $datasource.count) ) {Start-Sleep -Milliseconds 250}
+While (((Get-Date).subtract($begin).seconds -lt 30) -and ($Eventcount -lt $datasource.count) ) {Start-Sleep -Milliseconds 500}
 Unregister-Event -SourceIdentifier DPMExtractEvent* -Confirm:$false
 
 }
